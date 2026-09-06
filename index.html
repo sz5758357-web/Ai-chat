@@ -3,166 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Szczena Gpt</title>
+    <title>ChatGPT - Klon z 20+ modelami</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="app">
-        <!-- Sidebar -->
-        <aside id="sidebar" class="sidebar-hidden">
-            <div id="sidebarToggle">☰</div>
-            <div id="sidebarContent">
-                <div class="sidebar-header">
-                    <h1>🤖 Mega AI Chat</h1>
-                    <div id="connectionStatus" class="status-online">● Online</div>
+        <!-- Sidebar jak w ChatGPT -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <button id="newChatBtn" class="new-chat-btn">✨ Nowy czat</button>
+                <button id="toggleSidebar" class="toggle-btn">☰</button>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3>📡 Tryb</h3>
+                <div class="mode-selector">
+                    <button class="mode-btn active" data-mode="auto">🔄 Auto</button>
+                    <button class="mode-btn" data-mode="online">🌐 API</button>
+                    <button class="mode-btn" data-mode="offline">📴 Offline</button>
                 </div>
+            </div>
 
-                <div class="sidebar-section">
-                    <h3>📡 Tryb pracy</h3>
-                    <div class="mode-selector">
-                        <button id="modeAuto" class="mode-btn active">🔄 Auto</button>
-                        <button id="modeOnline" class="mode-btn">🌐 Online</button>
-                        <button id="modeOffline" class="mode-btn">📴 Offline</button>
-                    </div>
+            <div class="sidebar-section">
+                <h3>🧠 Wybierz model</h3>
+                <select id="modelSelect">
+                    <optgroup label="🔥 OpenAI">
+                        <option value="gpt-4o">GPT-4o (najnowszy)</option>
+                        <option value="gpt-4o-mini">GPT-4o-mini</option>
+                        <option value="gpt-4-turbo">GPT-4 Turbo</option>
+                        <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+                    </optgroup>
+                    <optgroup label="🧠 Anthropic">
+                        <option value="claude-3-5-sonnet">Claude 3.5 Sonnet</option>
+                        <option value="claude-3-haiku">Claude 3 Haiku</option>
+                    </optgroup>
+                    <optgroup label="🔵 Google">
+                        <option value="gemini-pro">Gemini Pro</option>
+                        <option value="gemini-flash">Gemini Flash</option>
+                    </optgroup>
+                    <optgroup label="⚡ Inne">
+                        <option value="deepseek-chat">DeepSeek Chat</option>
+                        <option value="mistral-large">Mistral Large</option>
+                        <option value="llama-3-70b">Llama 3 70B</option>
+                        <option value="mixtral-8x7b">Mixtral 8x7B</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <div class="sidebar-section" id="apiKeySection">
+                <h3>🔑 Klucz API</h3>
+                <input type="password" id="apiKeyInput" placeholder="Wpisz swój klucz API">
+                <small>Dla modeli OpenAI, Anthropic, Google itp.</small>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>📦 Offline</h3>
+                <div id="offlineStatus">💡 Nie załadowano</div>
+                <button id="loadOfflineBtn" class="btn-secondary">⬇️ Pobierz model</button>
+                <div id="progressContainer" style="display:none;">
+                    <div id="progressBar"><div id="progressFill" style="width:0%"></div></div>
+                    <span id="progressText">0%</span>
                 </div>
+            </div>
 
-                <div class="sidebar-section">
-                    <h3>🧠 Wybierz model (50+)</h3>
-                    <select id="modelSelect" size="1">
-                        <!-- ===== OFFLINE (12) ===== -->
-                        <optgroup label="📴 OFFLINE (lokalne - darmowe)">
-                            <option value="offline:Phi-3-mini-4k-instruct">Phi-3-mini (2GB) - 🏆 Najlepszy</option>
-                            <option value="offline:gemma-2b-it">Gemma-2B (1.5GB) - Google</option>
-                            <option value="offline:Qwen2-1.5B-Instruct">Qwen2-1.5B (1.2GB) - Alibaba</option>
-                            <option value="offline:TinyLlama-1.1B-Chat-v1.0">TinyLlama (500MB) - Najszybszy</option>
-                            <option value="offline:SmolLM-1.7B-Instruct">SmolLM (400MB) - Najmniejszy</option>
-                            <option value="offline:starcoder2-3b">StarCoder2-3B (kod)</option>
-                            <option value="offline:deepseek-coder-1.3b">DeepSeek-Coder (kod)</option>
-                            <option value="offline:granite-3b-code">Granite-3B (kod IBM)</option>
-                            <option value="offline:mobilebert-uncased">MobileBERT (analiza)</option>
-                            <option value="offline:distilbert-base">DistilBERT (szybki)</option>
-                            <option value="offline:llama-2-7b">Llama-2-7B (duży)</option>
-                            <option value="offline:falcon-7b">Falcon-7B (mocny)</option>
-                        </optgroup>
-
-                        <!-- ===== OPENAI (6) ===== -->
-                        <optgroup label="🌐 OpenAI">
-                            <option value="online:gpt-4o">GPT-4o (najnowszy)</option>
-                            <option value="online:gpt-4o-mini">GPT-4o-mini (szybki)</option>
-                            <option value="online:gpt-4-turbo">GPT-4 Turbo</option>
-                            <option value="online:gpt-4">GPT-4 (klasyczny)</option>
-                            <option value="online:gpt-3.5-turbo">GPT-3.5 Turbo (tani)</option>
-                            <option value="online:gpt-3.5-turbo-16k">GPT-3.5 16K (długi kontekst)</option>
-                        </optgroup>
-
-                        <!-- ===== ANTHROPIC (4) ===== -->
-                        <optgroup label="🌐 Anthropic Claude">
-                            <option value="online:claude-3-5-sonnet">Claude 3.5 Sonnet (🏆 najlepszy)</option>
-                            <option value="online:claude-3-5-haiku">Claude 3.5 Haiku (szybki)</option>
-                            <option value="online:claude-3-opus">Claude 3 Opus (mocny)</option>
-                            <option value="online:claude-3-sonnet">Claude 3 Sonnet</option>
-                        </optgroup>
-
-                        <!-- ===== GOOGLE (4) ===== -->
-                        <optgroup label="🌐 Google Gemini">
-                            <option value="online:gemini-pro">Gemini Pro</option>
-                            <option value="online:gemini-flash">Gemini Flash (szybki)</option>
-                            <option value="online:gemini-pro-vision">Gemini Pro Vision (obrazy)</option>
-                            <option value="online:gemini-ultra">Gemini Ultra (mocny)</option>
-                        </optgroup>
-
-                        <!-- ===== DEEPSEEK (3) ===== -->
-                        <optgroup label="🌐 DeepSeek">
-                            <option value="online:deepseek-chat">DeepSeek Chat</option>
-                            <option value="online:deepseek-coder">DeepSeek Coder (kod)</option>
-                            <option value="online:deepseek-v2">DeepSeek V2</option>
-                        </optgroup>
-
-                        <!-- ===== MISTRAL (3) ===== -->
-                        <optgroup label="🌐 Mistral AI">
-                            <option value="online:mistral-large">Mistral Large</option>
-                            <option value="online:mistral-small">Mistral Small</option>
-                            <option value="online:mistral-8x7b">Mixtral 8x7B</option>
-                        </optgroup>
-
-                        <!-- ===== GROQ (4) ===== -->
-                        <optgroup label="🌐 Groq (błyskawiczne)">
-                            <option value="online:llama-3-70b">Llama 3 70B (🏆 szybki)</option>
-                            <option value="online:llama-3-8b">Llama 3 8B</option>
-                            <option value="online:mixtral-8x7b-32768">Mixtral 8x7B</option>
-                            <option value="online:gemma-7b">Gemma 7B</option>
-                        </optgroup>
-
-                        <!-- ===== COHERE (3) ===== -->
-                        <optgroup label="🌐 Cohere">
-                            <option value="online:command-r">Command R</option>
-                            <option value="online:command-r-plus">Command R+</option>
-                            <option value="online:command-r-08-2024">Command R (nowy)</option>
-                        </optgroup>
-
-                        <!-- ===== INNE (7) ===== -->
-                        <optgroup label="🌐 Inne API">
-                            <option value="online:perplexity-sonar">Perplexity Sonar</option>
-                            <option value="online:perplexity-sonar-large">Perplexity Sonar Large</option>
-                            <option value="online:gemini-1.5-pro">Gemini 1.5 Pro</option>
-                            <option value="online:gemini-1.5-flash">Gemini 1.5 Flash</option>
-                            <option value="online:qwen-72b">Qwen 72B</option>
-                            <option value="online:qwen-32b">Qwen 32B</option>
-                            <option value="online:yi-34b">Yi 34B</option>
-                        </optgroup>
-                    </select>
-                    <small>📊 50+ modeli dostępnych</small>
-                </div>
-
-                <div class="sidebar-section" id="apiKeySection">
-                    <h3>🔑 Klucz API (online)</h3>
-                    <input type="password" id="apiKeyInput" placeholder="Wpisz swój klucz API">
-                    <small>Używane tylko dla modeli online</small>
-                </div>
-
-                <div class="sidebar-section" id="offlineStatus">
-                    <h3>📦 Status offline</h3>
-                    <div id="offlineModelStatus">💡 Nie załadowano</div>
-                    <button id="loadOfflineBtn" class="btn-primary">⬇️ Pobierz model offline</button>
-                    <div id="progressContainer" style="display:none; margin-top:10px;">
-                        <div id="progressBar"><div id="progressFill" style="width:0%"></div></div>
-                        <span id="progressText" style="font-size:12px;color:#8b949e;">0%</span>
-                    </div>
-                </div>
-
-                <div class="sidebar-section">
-                    <div style="display:flex; gap:5px;">
-                        <button id="newChatBtn" class="btn-primary" style="flex:1;">✨ Nowy czat</button>
-                        <button id="deleteAllBtn" class="btn-danger" style="flex:1;">🗑️ Wszystkie</button>
-                    </div>
-                    <button id="clearHistoryBtn" class="btn-danger" style="margin-top:5px;">🧹 Wyczyść historię</button>
-                    <button id="exportBtn" class="btn-secondary">📥 Eksportuj czat</button>
-                    <button id="importBtn" class="btn-secondary">📤 Importuj czat</button>
-                    <input type="file" id="importFileInput" accept=".json" style="display:none">
-                </div>
-
-                <div class="sidebar-section">
-                    <h3>📊 Statystyki</h3>
-                    <div id="statsDisplay">
-                        <div>💬 Wiadomości: <span id="msgCount">0</span></div>
-                        <div>📎 Pliki: <span id="fileCount">0</span></div>
-                        <div>💾 Rozmiar: <span id="dbSize">0 MB</span></div>
-                    </div>
-                </div>
-
-                <div class="sidebar-footer">
-                    <small>💡 Offline - wszystko lokalnie</small>
-                    <small>🚀 50+ modeli, nieskończona historia</small>
-                </div>
+            <div class="sidebar-footer">
+                <button id="clearBtn" class="btn-danger">🗑️ Wyczyść</button>
+                <button id="exportBtn" class="btn-secondary">📥 Export</button>
+                <button id="importBtn" class="btn-secondary">📤 Import</button>
+                <input type="file" id="importFile" accept=".json" style="display:none">
             </div>
         </aside>
 
         <!-- Główny czat -->
-        <main id="mainChat">
-            <div id="chatHeader">
-                <div id="chatTitle">💬 Nowa rozmowa</div>
-                <div id="modelDisplay">Model: Phi-3-mini</div>
-            </div>
+        <main id="chat">
+            <header id="chatHeader">
+                <div class="chat-title">
+                    <span id="chatTitle">💬 Nowa rozmowa</span>
+                    <span id="modelDisplay" class="model-badge">GPT-4o</span>
+                </div>
+                <div id="connectionStatus" class="status-online">● Online</div>
+            </header>
 
             <div id="messagesContainer">
                 <div id="messages"></div>
@@ -170,18 +90,16 @@
             </div>
 
             <div id="inputArea">
-                <div id="filePreviewContainer"></div>
-                <div id="inputRow">
-                    <button id="attachBtn" title="Załącz plik (nieograniczone)">📎</button>
-                    <input type="file" id="fileInput" multiple accept="*/*" style="display:none">
-                    <textarea id="userInput" rows="1" placeholder="Napisz wiadomość... (Shift+Enter = nowa linia)"></textarea>
-                    <button id="sendBtn" title="Wyślij">➤</button>
+                <div id="filePreview"></div>
+                <div class="input-row">
+                    <button id="attachBtn" class="icon-btn" title="Załącz plik">📎</button>
+                    <input type="file" id="fileInput" multiple style="display:none">
+                    <textarea id="userInput" rows="1" placeholder="Napisz wiadomość..."></textarea>
+                    <button id="sendBtn" class="send-btn">➤</button>
                 </div>
-                <div id="inputFooter">
+                <div class="input-footer">
                     <span id="wordCount">0 słów</span>
-                    <span id="modelInfo">📴 Offline</span>
-                    <span id="tokenCount">🔄 0 tokenów</span>
-                    <span id="contextLength">📏 0/128k</span>
+                    <span id="contextInfo">📏 0/128k</span>
                 </div>
             </div>
         </main>
