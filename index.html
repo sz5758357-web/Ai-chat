@@ -3,48 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multi-AI Chat</title>
+    <title>Offline AI Chat</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="app">
-        <!-- Panel boczny z ustawieniami -->
+        <!-- Panel boczny -->
         <aside id="sidebar">
-            <h2>⚙️ Ustawienia</h2>
-            <label>Model AI:
+            <h2>🤖 Modele offline</h2>
+            <div id="status">⏳ Ładowanie...</div>
+            <label>Wybierz model:
                 <select id="modelSelect">
-                    <option value="gpt-4o">OpenAI GPT-4o</option>
-                    <option value="claude-3.5-sonnet">Anthropic Claude 3.5</option>
-                    <option value="gemini-pro">Google Gemini Pro</option>
-                    <option value="deepseek-chat">DeepSeek Chat</option>
-                    <option value="mistral-large">Mistral Large</option>
+                    <option value="Xenova/Phi-3-mini-4k-instruct">Phi-3-mini (2GB) - najlepszy</option>
+                    <option value="Xenova/gemma-2b-it">Gemma-2B (1.5GB)</option>
+                    <option value="Xenova/Qwen2-1.5B-Instruct">Qwen2-1.5B (1.2GB)</option>
+                    <option value="Xenova/TinyLlama-1.1B-Chat-v1.0">TinyLlama (500MB) - najszybszy</option>
+                    <option value="Xenova/SmolLM-1.7B-Instruct">SmolLM (400MB) - najmniejszy</option>
                 </select>
             </label>
-            <label>Klucz API (opcjonalnie):
-                <input type="password" id="apiKeyInput" placeholder="Wpisz swój klucz">
-            </label>
+            <button id="loadModelBtn">⬇️ Pobierz / Załaduj model</button>
             <button id="clearHistoryBtn">🗑️ Wyczyść historię</button>
-            <button id="exportBtn">📥 Eksportuj czat</button>
-            <button id="importBtn">📤 Importuj czat</button>
-            <input type="file" id="importFileInput" accept=".json" style="display:none">
+            <button id="exportBtn">📥 Eksportuj</button>
+            <div id="progressBar" style="display:none; margin-top:10px;">
+                <div id="progressFill" style="width:0%;height:6px;background:#238636;border-radius:3px;"></div>
+                <span id="progressText" style="font-size:12px;">0%</span>
+            </div>
         </aside>
 
-        <!-- Główny obszar czatu -->
+        <!-- Główny czat -->
         <main>
             <div id="chatContainer">
                 <div id="messages"></div>
                 <div id="inputArea">
                     <div id="filePreview"></div>
                     <div id="inputRow">
-                        <input type="text" id="userInput" placeholder="Napisz wiadomość...">
+                        <input type="text" id="userInput" placeholder="Napisz wiadomość... (działa offline)">
                         <label for="fileInput" id="fileLabel">📎</label>
-                        <input type="file" id="fileInput" multiple accept="image/*,.pdf,.txt,.docx">
+                        <input type="file" id="fileInput" multiple accept="*/*">
                         <button id="sendBtn">➤</button>
                     </div>
                 </div>
             </div>
         </main>
     </div>
-    <script src="script.js"></script>
+
+    <!-- Ładujemy Transformers.js z CDN -->
+    <script type="importmap">
+        {
+            "imports": {
+                "@huggingface/transformers": "https://cdn.jsdelivr.net/npm/@huggingface/transformers@2.17.0/dist/transformers.js"
+            }
+        }
+    </script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
