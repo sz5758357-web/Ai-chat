@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-AI Chat</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Panel boczny z ustawieniami -->
+        <aside id="sidebar">
+            <h2>⚙️ Ustawienia</h2>
+            <label>Model AI:
+                <select id="modelSelect">
+                    <option value="gpt-4o">OpenAI GPT-4o</option>
+                    <option value="claude-3.5-sonnet">Anthropic Claude 3.5</option>
+                    <option value="gemini-pro">Google Gemini Pro</option>
+                    <option value="deepseek-chat">DeepSeek Chat</option>
+                    <option value="mistral-large">Mistral Large</option>
+                </select>
+            </label>
+            <label>Klucz API (opcjonalnie):
+                <input type="password" id="apiKeyInput" placeholder="Wpisz swój klucz">
+            </label>
+            <button id="clearHistoryBtn">🗑️ Wyczyść historię</button>
+            <button id="exportBtn">📥 Eksportuj czat</button>
+            <button id="importBtn">📤 Importuj czat</button>
+            <input type="file" id="importFileInput" accept=".json" style="display:none">
+        </aside>
+
+        <!-- Główny obszar czatu -->
+        <main>
+            <div id="chatContainer">
+                <div id="messages"></div>
+                <div id="inputArea">
+                    <div id="filePreview"></div>
+                    <div id="inputRow">
+                        <input type="text" id="userInput" placeholder="Napisz wiadomość...">
+                        <label for="fileInput" id="fileLabel">📎</label>
+                        <input type="file" id="fileInput" multiple accept="image/*,.pdf,.txt,.docx">
+                        <button id="sendBtn">➤</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
