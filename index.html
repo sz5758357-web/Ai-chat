@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🤖 AI Chat Pro - Online/Offline</title>
+    <title>Szczena Gpt</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,7 +13,7 @@
             <div id="sidebarToggle">☰</div>
             <div id="sidebarContent">
                 <div class="sidebar-header">
-                    <h1>🤖 AI Chat Pro</h1>
+                    <h1>🤖 Mega AI Chat</h1>
                     <div id="connectionStatus" class="status-online">● Online</div>
                 </div>
 
@@ -27,26 +27,91 @@
                 </div>
 
                 <div class="sidebar-section">
-                    <h3>🧠 Wybierz model</h3>
-                    <select id="modelSelect">
-                        <!-- Offline modele -->
-                        <optgroup label="📴 Offline (lokalne)">
-                            <option value="offline:phi3">Phi-3-mini (2GB)</option>
-                            <option value="offline:gemma">Gemma-2B (1.5GB)</option>
-                            <option value="offline:qwen">Qwen2-1.5B (1.2GB)</option>
-                            <option value="offline:tinyllama">TinyLlama (500MB)</option>
+                    <h3>🧠 Wybierz model (50+)</h3>
+                    <select id="modelSelect" size="1">
+                        <!-- ===== OFFLINE (12) ===== -->
+                        <optgroup label="📴 OFFLINE (lokalne - darmowe)">
+                            <option value="offline:Phi-3-mini-4k-instruct">Phi-3-mini (2GB) - 🏆 Najlepszy</option>
+                            <option value="offline:gemma-2b-it">Gemma-2B (1.5GB) - Google</option>
+                            <option value="offline:Qwen2-1.5B-Instruct">Qwen2-1.5B (1.2GB) - Alibaba</option>
+                            <option value="offline:TinyLlama-1.1B-Chat-v1.0">TinyLlama (500MB) - Najszybszy</option>
+                            <option value="offline:SmolLM-1.7B-Instruct">SmolLM (400MB) - Najmniejszy</option>
+                            <option value="offline:starcoder2-3b">StarCoder2-3B (kod)</option>
+                            <option value="offline:deepseek-coder-1.3b">DeepSeek-Coder (kod)</option>
+                            <option value="offline:granite-3b-code">Granite-3B (kod IBM)</option>
+                            <option value="offline:mobilebert-uncased">MobileBERT (analiza)</option>
+                            <option value="offline:distilbert-base">DistilBERT (szybki)</option>
+                            <option value="offline:llama-2-7b">Llama-2-7B (duży)</option>
+                            <option value="offline:falcon-7b">Falcon-7B (mocny)</option>
                         </optgroup>
-                        <!-- Online modele -->
-                        <optgroup label="🌐 Online (API)">
-                            <option value="online:gpt4o">GPT-4o</option>
-                            <option value="online:gpt4o-mini">GPT-4o-mini</option>
-                            <option value="online:claude">Claude 3.5 Sonnet</option>
-                            <option value="online:gemini">Gemini Pro</option>
-                            <option value="online:deepseek">DeepSeek Chat</option>
-                            <option value="online:mistral">Mistral Large</option>
-                            <option value="online:llama3">Llama 3 (Groq)</option>
+
+                        <!-- ===== OPENAI (6) ===== -->
+                        <optgroup label="🌐 OpenAI">
+                            <option value="online:gpt-4o">GPT-4o (najnowszy)</option>
+                            <option value="online:gpt-4o-mini">GPT-4o-mini (szybki)</option>
+                            <option value="online:gpt-4-turbo">GPT-4 Turbo</option>
+                            <option value="online:gpt-4">GPT-4 (klasyczny)</option>
+                            <option value="online:gpt-3.5-turbo">GPT-3.5 Turbo (tani)</option>
+                            <option value="online:gpt-3.5-turbo-16k">GPT-3.5 16K (długi kontekst)</option>
+                        </optgroup>
+
+                        <!-- ===== ANTHROPIC (4) ===== -->
+                        <optgroup label="🌐 Anthropic Claude">
+                            <option value="online:claude-3-5-sonnet">Claude 3.5 Sonnet (🏆 najlepszy)</option>
+                            <option value="online:claude-3-5-haiku">Claude 3.5 Haiku (szybki)</option>
+                            <option value="online:claude-3-opus">Claude 3 Opus (mocny)</option>
+                            <option value="online:claude-3-sonnet">Claude 3 Sonnet</option>
+                        </optgroup>
+
+                        <!-- ===== GOOGLE (4) ===== -->
+                        <optgroup label="🌐 Google Gemini">
+                            <option value="online:gemini-pro">Gemini Pro</option>
+                            <option value="online:gemini-flash">Gemini Flash (szybki)</option>
+                            <option value="online:gemini-pro-vision">Gemini Pro Vision (obrazy)</option>
+                            <option value="online:gemini-ultra">Gemini Ultra (mocny)</option>
+                        </optgroup>
+
+                        <!-- ===== DEEPSEEK (3) ===== -->
+                        <optgroup label="🌐 DeepSeek">
+                            <option value="online:deepseek-chat">DeepSeek Chat</option>
+                            <option value="online:deepseek-coder">DeepSeek Coder (kod)</option>
+                            <option value="online:deepseek-v2">DeepSeek V2</option>
+                        </optgroup>
+
+                        <!-- ===== MISTRAL (3) ===== -->
+                        <optgroup label="🌐 Mistral AI">
+                            <option value="online:mistral-large">Mistral Large</option>
+                            <option value="online:mistral-small">Mistral Small</option>
+                            <option value="online:mistral-8x7b">Mixtral 8x7B</option>
+                        </optgroup>
+
+                        <!-- ===== GROQ (4) ===== -->
+                        <optgroup label="🌐 Groq (błyskawiczne)">
+                            <option value="online:llama-3-70b">Llama 3 70B (🏆 szybki)</option>
+                            <option value="online:llama-3-8b">Llama 3 8B</option>
+                            <option value="online:mixtral-8x7b-32768">Mixtral 8x7B</option>
+                            <option value="online:gemma-7b">Gemma 7B</option>
+                        </optgroup>
+
+                        <!-- ===== COHERE (3) ===== -->
+                        <optgroup label="🌐 Cohere">
+                            <option value="online:command-r">Command R</option>
+                            <option value="online:command-r-plus">Command R+</option>
+                            <option value="online:command-r-08-2024">Command R (nowy)</option>
+                        </optgroup>
+
+                        <!-- ===== INNE (7) ===== -->
+                        <optgroup label="🌐 Inne API">
+                            <option value="online:perplexity-sonar">Perplexity Sonar</option>
+                            <option value="online:perplexity-sonar-large">Perplexity Sonar Large</option>
+                            <option value="online:gemini-1.5-pro">Gemini 1.5 Pro</option>
+                            <option value="online:gemini-1.5-flash">Gemini 1.5 Flash</option>
+                            <option value="online:qwen-72b">Qwen 72B</option>
+                            <option value="online:qwen-32b">Qwen 32B</option>
+                            <option value="online:yi-34b">Yi 34B</option>
                         </optgroup>
                     </select>
+                    <small>📊 50+ modeli dostępnych</small>
                 </div>
 
                 <div class="sidebar-section" id="apiKeySection">
@@ -66,14 +131,28 @@
                 </div>
 
                 <div class="sidebar-section">
-                    <button id="clearHistoryBtn" class="btn-danger">🗑️ Wyczyść historię</button>
+                    <div style="display:flex; gap:5px;">
+                        <button id="newChatBtn" class="btn-primary" style="flex:1;">✨ Nowy czat</button>
+                        <button id="deleteAllBtn" class="btn-danger" style="flex:1;">🗑️ Wszystkie</button>
+                    </div>
+                    <button id="clearHistoryBtn" class="btn-danger" style="margin-top:5px;">🧹 Wyczyść historię</button>
                     <button id="exportBtn" class="btn-secondary">📥 Eksportuj czat</button>
                     <button id="importBtn" class="btn-secondary">📤 Importuj czat</button>
                     <input type="file" id="importFileInput" accept=".json" style="display:none">
                 </div>
 
+                <div class="sidebar-section">
+                    <h3>📊 Statystyki</h3>
+                    <div id="statsDisplay">
+                        <div>💬 Wiadomości: <span id="msgCount">0</span></div>
+                        <div>📎 Pliki: <span id="fileCount">0</span></div>
+                        <div>💾 Rozmiar: <span id="dbSize">0 MB</span></div>
+                    </div>
+                </div>
+
                 <div class="sidebar-footer">
-                    <small>💡 Offline mode - wszystko działa lokalnie</small>
+                    <small>💡 Offline - wszystko lokalnie</small>
+                    <small>🚀 50+ modeli, nieskończona historia</small>
                 </div>
             </div>
         </aside>
@@ -87,19 +166,22 @@
 
             <div id="messagesContainer">
                 <div id="messages"></div>
+                <div id="scrollToBottom" onclick="scrollToBottom()">⬇️</div>
             </div>
 
             <div id="inputArea">
                 <div id="filePreviewContainer"></div>
                 <div id="inputRow">
-                    <button id="attachBtn" title="Załącz plik">📎</button>
+                    <button id="attachBtn" title="Załącz plik (nieograniczone)">📎</button>
                     <input type="file" id="fileInput" multiple accept="*/*" style="display:none">
                     <textarea id="userInput" rows="1" placeholder="Napisz wiadomość... (Shift+Enter = nowa linia)"></textarea>
                     <button id="sendBtn" title="Wyślij">➤</button>
                 </div>
                 <div id="inputFooter">
                     <span id="wordCount">0 słów</span>
-                    <span id="modelInfo">Offline: ✅</span>
+                    <span id="modelInfo">📴 Offline</span>
+                    <span id="tokenCount">🔄 0 tokenów</span>
+                    <span id="contextLength">📏 0/128k</span>
                 </div>
             </div>
         </main>
