@@ -1,4 +1,5 @@
-// ===== IMPORTOWANIE TRANSFORMERS.JS =====
+import { env } from '@huggingface/transformers';
+env.backend = 'webgpu'; // Jeszcze szybsze!// ===== IMPORTOWANIE TRANSFORMERS.JS =====
 import { pipeline, env } from '@huggingface/transformers';
 
 // ===== KONFIGURACJA =====
