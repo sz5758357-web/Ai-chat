@@ -3,51 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Offline AI Chat</title>
+    <title>🤖 AI Chat Pro - Online/Offline</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="app">
-        <!-- Panel boczny -->
-        <aside id="sidebar">
-            <h2>🤖 Modele offline</h2>
-            <div id="status">⏳ Ładowanie...</div>
-            <label>Wybierz model:
-                <select id="modelSelect">
-                    <option value="Xenova/Phi-3-mini-4k-instruct">Phi-3-mini (2GB) - najlepszy</option>
-                    <option value="Xenova/gemma-2b-it">Gemma-2B (1.5GB)</option>
-                    <option value="Xenova/Qwen2-1.5B-Instruct">Qwen2-1.5B (1.2GB)</option>
-                    <option value="Xenova/TinyLlama-1.1B-Chat-v1.0">TinyLlama (500MB) - najszybszy</option>
-                    <option value="Xenova/SmolLM-1.7B-Instruct">SmolLM (400MB) - najmniejszy</option>
-                </select>
-            </label>
-            <button id="loadModelBtn">⬇️ Pobierz / Załaduj model</button>
-            <button id="clearHistoryBtn">🗑️ Wyczyść historię</button>
-            <button id="exportBtn">📥 Eksportuj</button>
-            <div id="progressBar" style="display:none; margin-top:10px;">
-                <div id="progressFill" style="width:0%;height:6px;background:#238636;border-radius:3px;"></div>
-                <span id="progressText" style="font-size:12px;">0%</span>
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar-hidden">
+            <div id="sidebarToggle">☰</div>
+            <div id="sidebarContent">
+                <div class="sidebar-header">
+                    <h1>🤖 AI Chat Pro</h1>
+                    <div id="connectionStatus" class="status-online">● Online</div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>📡 Tryb pracy</h3>
+                    <div class="mode-selector">
+                        <button id="modeAuto" class="mode-btn active">🔄 Auto</button>
+                        <button id="modeOnline" class="mode-btn">🌐 Online</button>
+                        <button id="modeOffline" class="mode-btn">📴 Offline</button>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>🧠 Wybierz model</h3>
+                    <select id="modelSelect">
+                        <!-- Offline modele -->
+                        <optgroup label="📴 Offline (lokalne)">
+                            <option value="offline:phi3">Phi-3-mini (2GB)</option>
+                            <option value="offline:gemma">Gemma-2B (1.5GB)</option>
+                            <option value="offline:qwen">Qwen2-1.5B (1.2GB)</option>
+                            <option value="offline:tinyllama">TinyLlama (500MB)</option>
+                        </optgroup>
+                        <!-- Online modele -->
+                        <optgroup label="🌐 Online (API)">
+                            <option value="online:gpt4o">GPT-4o</option>
+                            <option value="online:gpt4o-mini">GPT-4o-mini</option>
+                            <option value="online:claude">Claude 3.5 Sonnet</option>
+                            <option value="online:gemini">Gemini Pro</option>
+                            <option value="online:deepseek">DeepSeek Chat</option>
+                            <option value="online:mistral">Mistral Large</option>
+                            <option value="online:llama3">Llama 3 (Groq)</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <div class="sidebar-section" id="apiKeySection">
+                    <h3>🔑 Klucz API (online)</h3>
+                    <input type="password" id="apiKeyInput" placeholder="Wpisz swój klucz API">
+                    <small>Używane tylko dla modeli online</small>
+                </div>
+
+                <div class="sidebar-section" id="offlineStatus">
+                    <h3>📦 Status offline</h3>
+                    <div id="offlineModelStatus">💡 Nie załadowano</div>
+                    <button id="loadOfflineBtn" class="btn-primary">⬇️ Pobierz model offline</button>
+                    <div id="progressContainer" style="display:none; margin-top:10px;">
+                        <div id="progressBar"><div id="progressFill" style="width:0%"></div></div>
+                        <span id="progressText" style="font-size:12px;color:#8b949e;">0%</span>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <button id="clearHistoryBtn" class="btn-danger">🗑️ Wyczyść historię</button>
+                    <button id="exportBtn" class="btn-secondary">📥 Eksportuj czat</button>
+                    <button id="importBtn" class="btn-secondary">📤 Importuj czat</button>
+                    <input type="file" id="importFileInput" accept=".json" style="display:none">
+                </div>
+
+                <div class="sidebar-footer">
+                    <small>💡 Offline mode - wszystko działa lokalnie</small>
+                </div>
             </div>
         </aside>
 
         <!-- Główny czat -->
-        <main>
-            <div id="chatContainer">
+        <main id="mainChat">
+            <div id="chatHeader">
+                <div id="chatTitle">💬 Nowa rozmowa</div>
+                <div id="modelDisplay">Model: Phi-3-mini</div>
+            </div>
+
+            <div id="messagesContainer">
                 <div id="messages"></div>
-                <div id="inputArea">
-                    <div id="filePreview"></div>
-                    <div id="inputRow">
-                        <input type="text" id="userInput" placeholder="Napisz wiadomość... (działa offline)">
-                        <label for="fileInput" id="fileLabel">📎</label>
-                        <input type="file" id="fileInput" multiple accept="*/*">
-                        <button id="sendBtn">➤</button>
-                    </div>
+            </div>
+
+            <div id="inputArea">
+                <div id="filePreviewContainer"></div>
+                <div id="inputRow">
+                    <button id="attachBtn" title="Załącz plik">📎</button>
+                    <input type="file" id="fileInput" multiple accept="*/*" style="display:none">
+                    <textarea id="userInput" rows="1" placeholder="Napisz wiadomość... (Shift+Enter = nowa linia)"></textarea>
+                    <button id="sendBtn" title="Wyślij">➤</button>
+                </div>
+                <div id="inputFooter">
+                    <span id="wordCount">0 słów</span>
+                    <span id="modelInfo">Offline: ✅</span>
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- Ładujemy Transformers.js z CDN -->
     <script type="importmap">
         {
             "imports": {
